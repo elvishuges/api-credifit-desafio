@@ -12,8 +12,9 @@ import {
 import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 import { AgreedCompanyService } from '../services/agreed-company.service';
+import { Representative } from 'src/representatives/entities/representative.entity';
 
-@ApiTags('ShoppingCart')
+@ApiTags('agreedCompanies')
 @Controller()
 export class AgreedCompaniesController {
   constructor(private readonly agreedCompanyService: AgreedCompanyService) {}
@@ -21,7 +22,7 @@ export class AgreedCompaniesController {
   @ApiOperation({ summary: 'Criar Empresa Conveniada' })
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  create(@Body() companyName: string) {
-    return this.agreedCompanyService.create(companyName);
+  create(@Body() representative: CreateAgreedCompanyDTO) {
+    return this.agreedCompanyService.create(representative.name);
   }
 }

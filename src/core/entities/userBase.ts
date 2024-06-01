@@ -17,6 +17,9 @@ export abstract class UserBase {
   id: number;
 
   @Column()
+  fullname: string;
+
+  @Column()
   cpf: string;
 
   @Index({ unique: true })

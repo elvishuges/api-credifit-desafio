@@ -6,20 +6,13 @@ import { Base } from '../../core/entities/base';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 
-@Entity('user')
+@Entity('representative')
 export class Representative extends UserBase {
   @Column()
-  firstName: string;
+  cnpj: string;
 
   @Column()
-  lastName: string;
-
-  @Index({ unique: true })
-  @Column()
-  email: string;
-
-  @Exclude({ toPlainOnly: false })
-  password: string;
+  companyName: string;
 
   @OneToOne(
     () => AgreedCompany,

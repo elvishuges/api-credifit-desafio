@@ -7,10 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthService } from './auth/services/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { SalesController } from './sales/controllers/sales.controller';
-import { SalesModule } from './sales/sales.module';
-import { ProductsController } from './products/controllers/products.controller';
-import { ProductsModule } from './products/products.module';
 import { RepresentativesModule } from './representatives/representatives.module';
 import { EmployeesModule } from './employees/employees.module';
 import { AgreedCompaniesModule } from './agreed-companies/agreed-companies.module';
@@ -27,8 +23,6 @@ import { AgreedCompaniesModule } from './agreed-companies/agreed-companies.modul
     UsersModule,
     AuthModule,
     ConfigModule.forRoot(),
-    SalesModule,
-    ProductsModule,
     RepresentativesModule,
     EmployeesModule,
     AgreedCompaniesModule,

@@ -1,21 +1,19 @@
 import {
   Entity,
   Column,
-  Index,
   OneToOne,
-  JoinColumn,
   OneToMany,
-  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Base } from './../../core/entities/base';
-import { User } from './../../users/entities/user.entity';
 import { Employee } from './../../employees/entities/employee.entity';
-import { ApiProperty } from '@nestjs/swagger';
 import { Representative } from 'src/representatives/entities/representative.entity';
 
 @Entity({ name: 'sales' })
 export class AgreedCompany {
+  @PrimaryGeneratedColumn()
+  id: number;
+
   @Column()
   name: string;
 

@@ -14,10 +14,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 
-@Entity({ name: 'sales' })
+@Entity({ name: 'employee' })
 export class Employee extends UserBase {
   @Column()
-  salario: string;
+  salary: string;
 
   @ManyToOne(() => AgreedCompany, (agreedCompany) => agreedCompany.employees)
   agreedCompany: AgreedCompany;
