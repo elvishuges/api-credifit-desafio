@@ -7,7 +7,9 @@ import { useContainer } from 'class-validator';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, {
+    cors: true,
+  });
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const config = new DocumentBuilder()

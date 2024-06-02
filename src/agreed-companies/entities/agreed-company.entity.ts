@@ -4,12 +4,13 @@ import {
   OneToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  JoinColumn,
 } from 'typeorm';
 
 import { Employee } from './../../employees/entities/employee.entity';
 import { Representative } from 'src/representatives/entities/representative.entity';
 
-@Entity({ name: 'sales' })
+@Entity({ name: 'agreedCompanies' })
 export class AgreedCompany {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,12 +18,18 @@ export class AgreedCompany {
   @Column()
   name: string;
 
-  @OneToMany(() => Employee, (employee) => employee.agreedCompany)
+  @OneToMany(() => Employee, (employee) => employee.agreedCompany, {
+    cascade: true,
+  })
   employees: Employee[];
 
+  @JoinColumn()
   @OneToOne(
     () => Representative,
     (representative) => representative.agreedCompany,
+    {
+      cascade: true,
+    },
   )
   representative: Representative;
 }

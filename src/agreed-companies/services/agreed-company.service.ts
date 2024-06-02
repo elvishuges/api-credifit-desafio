@@ -5,34 +5,55 @@ import { AgreedCompany } from '../entities/agreed-company.entity';
 
 import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 import { User } from 'src/users/entities/user.entity';
+import { Representative } from 'src/representatives/entities/representative.entity';
+import { Employee } from 'src/employees/entities/employee.entity';
 
 @Injectable()
 export class AgreedCompanyService {
   constructor(
     @InjectRepository(AgreedCompany)
-    private readonly agreedCompanyRespository: Repository<AgreedCompany>,
+    private readonly agreedCompanyRepository: Repository<AgreedCompany>,
+
+    @InjectRepository(AgreedCompany)
+    private readonly employeeRepository: Repository<Employee>,
   ) {}
 
   async findAll() {
-    return this.agreedCompanyRespository.find({ relations: ['products'] });
-  }
-
-  async create(name: string) {
-    return await this.agreedCompanyRespository.save({
-      name: name,
+    return this.agreedCompanyRepository.find({
+      relations: ['representative'],
     });
   }
-
-  async findOne(id: number) {
-    const query = { where: { id } };
-
-    const sale = await this.agreedCompanyRespository.find({
-      loadRelationIds: { relations: ['products'] },
+  async findAllEmployees(agreedCompanyId: number) {
+    const agreedCompany = await this.agreedCompanyRepository.findOne({
+      where: { id: agreedCompanyId },
+      relations: ['employees'],
     });
 
-    if (!sale) {
-      throw new HttpException(`sale id ${id} not found`, HttpStatus.NOT_FOUND);
+    if (!agreedCompany) {
+      throw new Error('AgreedCompany not found');
     }
-    return sale;
+
+    return agreedCompany.employees;
+  }
+
+  async create(name: string, representative: Representative) {
+    return await this.agreedCompanyRepository.save({
+      name: name,
+      representative: representative,
+    });
+  }
+
+  async findOne(id: number): Promise<AgreedCompany> {
+    const query = { where: { id }, relations: ['employees'] };
+
+    const agreedCompany = await this.agreedCompanyRepository.findOne(query);
+
+    if (!agreedCompany) {
+      throw new HttpException(
+        `agreedCompany id ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return agreedCompany;
   }
 }

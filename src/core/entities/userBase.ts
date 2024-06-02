@@ -1,12 +1,4 @@
-import {
-  CreateDateColumn,
-  DeleteDateColumn,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
-  Column,
-  Index,
-} from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 
 import { hashSync } from 'bcrypt';
 
@@ -17,7 +9,7 @@ export abstract class UserBase {
   id: number;
 
   @Column()
-  fullname: string;
+  fullName: string;
 
   @Column()
   cpf: string;

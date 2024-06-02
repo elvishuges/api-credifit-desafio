@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { IsEmailUnique } from 'src/users/validators/is-email-unique.validator';
 
-export class RepresentativeDTO {
+export class CreateRepresentativeDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()

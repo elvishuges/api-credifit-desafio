@@ -8,17 +8,16 @@ import {
   ManyToOne,
 } from 'typeorm';
 
-import { Base } from '../../core/entities/base';
-import { User } from '../../users/entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 
 @Entity({ name: 'employee' })
 export class Employee extends UserBase {
-  @Column()
-  salary: string;
+  @Column('decimal', { precision: 10, scale: 2 })
+  salary: number;
 
   @ManyToOne(() => AgreedCompany, (agreedCompany) => agreedCompany.employees)
+  @JoinColumn({ name: 'agreedCompany_id' })
   agreedCompany: AgreedCompany;
 }

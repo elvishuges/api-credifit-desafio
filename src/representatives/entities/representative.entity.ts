@@ -2,7 +2,6 @@ import { Entity, Column, Index, OneToOne, JoinColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { hashSync } from 'bcrypt';
 
-import { Base } from '../../core/entities/base';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 

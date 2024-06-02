@@ -7,10 +7,7 @@ import { Base } from './../../core/entities/base';
 @Entity('user')
 export class User extends Base {
   @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
+  name: string;
 
   @Index({ unique: true })
   @Column()

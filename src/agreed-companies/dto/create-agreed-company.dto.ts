@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { RepresentativeDTO } from 'src/representatives/dto/representative.dto';
+import { CreateRepresentativeDTO } from 'src/representatives/dto/create-representative.dto';
 import { Representative } from 'src/representatives/entities/representative.entity';
 
 export class CreateAgreedCompanyDTO {
@@ -10,5 +10,5 @@ export class CreateAgreedCompanyDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  representative: RepresentativeDTO;
+  representative: CreateRepresentativeDTO;
 }
