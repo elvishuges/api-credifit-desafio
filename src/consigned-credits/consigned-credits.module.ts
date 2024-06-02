@@ -1,0 +1,14 @@
+import { Module } from '@nestjs/common';
+import { ConsignedCreditService } from './services/consigned-credit.service';
+import { ConsignedCreditController } from './controllers/consigned-credit.controller';
+import { ConsignedCredit } from './entities/consigned-credit.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EmployeesModule } from 'src/employees/employees.module';
+import { Employee } from 'src/employees/entities/employee.entity';
+
+@Module({
+  imports: [TypeOrmModule.forFeature([ConsignedCredit, Employee])],
+  providers: [ConsignedCreditService],
+  controllers: [ConsignedCreditController],
+})
+export class ConsignedCreditsModule {}

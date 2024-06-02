@@ -71,11 +71,6 @@ export class AgreedCompaniesController {
     @Param('id') agreedCompanyId: number,
     @Body() createEmployeeDTO: CreateEmployeeDTO,
   ) {
-    const employee = await this.employeeService.create(createEmployeeDTO);
-    const agreedCompany = await this.agreedCompanyService.findOne(
-      agreedCompanyId,
-    );
-    agreedCompany.employees.push(employee);
-    return this.agreedCompanyService.findAllEmployees(agreedCompanyId);
+    this.agreedCompanyService.addEmployee(agreedCompanyId, createEmployeeDTO);
   }
 }

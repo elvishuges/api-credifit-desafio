@@ -3,11 +3,9 @@ import { PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 import { hashSync } from 'bcrypt';
 
 import { Exclude } from 'class-transformer';
+import { Base } from './base';
 
-export abstract class UserBase {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export abstract class UserBase extends Base {
   @Column()
   fullName: string;
 

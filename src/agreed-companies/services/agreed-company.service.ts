@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AgreedCompany } from '../entities/agreed-company.entity';
@@ -7,14 +12,14 @@ import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 import { User } from 'src/users/entities/user.entity';
 import { Representative } from 'src/representatives/entities/representative.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
+import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
 
 @Injectable()
 export class AgreedCompanyService {
   constructor(
     @InjectRepository(AgreedCompany)
     private readonly agreedCompanyRepository: Repository<AgreedCompany>,
-
-    @InjectRepository(AgreedCompany)
+    @InjectRepository(Employee)
     private readonly employeeRepository: Repository<Employee>,
   ) {}
 
@@ -30,7 +35,7 @@ export class AgreedCompanyService {
     });
 
     if (!agreedCompany) {
-      throw new Error('AgreedCompany not found');
+      throw new NotFoundException(`The requested record was not found`);
     }
 
     return agreedCompany.employees;
@@ -41,6 +46,16 @@ export class AgreedCompanyService {
       name: name,
       representative: representative,
     });
+  }
+  async addEmployee(agreedCompanyId: number, employee: CreateEmployeeDTO) {
+    const agreedCompany = await this.agreedCompanyRepository.findOne({
+      where: { id: agreedCompanyId },
+      relations: ['employees'],
+    });
+    const cratedEmployee = this.employeeRepository.create(employee);
+    cratedEmployee.agreedCompany = agreedCompany;
+    agreedCompany.employees.push(cratedEmployee);
+    return this.agreedCompanyRepository.save(agreedCompany);
   }
 
   async findOne(id: number): Promise<AgreedCompany> {

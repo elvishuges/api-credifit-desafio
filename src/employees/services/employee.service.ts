@@ -14,29 +14,23 @@ export class EmployeeService {
     private readonly employeeRepository: Repository<Employee>,
   ) {}
 
-  async findAll() {
-    return this.employeeRepository.find({ relations: ['products'] });
+  async findAll(): Promise<Employee[]> {
+    return this.employeeRepository.find({ relations: ['agreedCompany'] });
   }
 
-  async create(employee: CreateEmployeeDTO) {
+  async create(employee: CreateEmployeeDTO): Promise<Employee> {
     return await this.employeeRepository.save({
       ...employee,
     });
   }
 
-  async findOne(id: number) {
-    const query = { where: { id } };
-
-    const sale = await this.employeeRepository.find({
-      loadRelationIds: { relations: ['products'] },
+  async findOne(id: number): Promise<Employee> {
+    return this.employeeRepository.findOne({
+      where: { id },
+      relations: ['agreedCompany'],
     });
-
-    if (!sale) {
-      throw new HttpException(`sale id ${id} not found`, HttpStatus.NOT_FOUND);
-    }
-    return sale;
   }
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<Employee> {
     const query = { where: [{ email }] };
     return await this.employeeRepository.findOne(query);
   }

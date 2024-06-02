@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { RepresentativesModule } from './representatives/representatives.module';
 import { EmployeesModule } from './employees/employees.module';
 import { AgreedCompaniesModule } from './agreed-companies/agreed-companies.module';
+import { ConsignedCreditsModule } from './consigned-credits/consigned-credits.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AgreedCompaniesModule } from './agreed-companies/agreed-companies.modul
     AuthModule,
     RepresentativesModule,
     AgreedCompaniesModule,
+    ConsignedCreditsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService],
