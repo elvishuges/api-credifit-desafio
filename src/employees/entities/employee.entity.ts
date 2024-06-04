@@ -11,6 +11,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'employee' })
 export class Employee extends UserBase {

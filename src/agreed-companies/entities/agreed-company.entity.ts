@@ -18,9 +18,7 @@ export class AgreedCompany {
   @Column()
   name: string;
 
-  @OneToMany(() => Employee, (employee) => employee.agreedCompany, {
-    cascade: true,
-  })
+  @OneToMany(() => Employee, (employee) => employee.agreedCompany)
   employees: Employee[];
 
   @JoinColumn()

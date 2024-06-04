@@ -13,12 +13,7 @@ export class AuthRegisterDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  readonly firstName: string;
-
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  readonly lastName: string;
+  readonly name: string;
 
   @ApiProperty()
   @IsEmail()

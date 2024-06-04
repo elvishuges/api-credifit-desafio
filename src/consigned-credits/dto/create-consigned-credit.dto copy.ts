@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateConsignedCreditDTO {
   @ApiProperty()
@@ -17,4 +17,20 @@ export class CreateConsignedCreditDTO {
   @ApiProperty()
   @IsNotEmpty()
   employeeId: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  status?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  statusInfos?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  dateNextInstallment?: Date;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  currentInstallment?: number;
 }

@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateRepresentativeDTO } from '../dto/update-representative.dto';
 
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { Representative } from '../entities/representative.entity';
+import { CreateRepresentativeDTO } from '../dto/create-representative.dto';
 
 @Injectable()
 export class RepresentativeService {

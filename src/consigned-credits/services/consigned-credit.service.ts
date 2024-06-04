@@ -49,15 +49,32 @@ export class ConsignedCreditService {
       relations: ['agreedCompany'],
     });
 
-    if (!employee || employee.agreedCompany == null) {
+    if (!employee) {
       throw new NotFoundException('Funcionário não vinculado a uma empresa');
     }
+    const validScore = this.isAutomaticallyApproved(
+      employee.salary,
+      employee.score,
+    );
+
+    // if (validScore) {
+    //   throw new NotFoundException('Funcionário não vinculado a uma empresa');
+    // }
 
     return 'installmentObject';
   }
 
-  mockApproveScore() {
-    return Math.random() < 0.5; // Retorna verdadeiro com 50% de chance e falso com 50% de chance
+  isAutomaticallyApproved(salary: number, score: number): boolean {
+    if (salary <= 2000) {
+      return score >= 400;
+    } else if (salary <= 4000) {
+      return score >= 500;
+    } else if (salary <= 8000) {
+      return score >= 600;
+    } else if (salary <= 12000) {
+      return score >= 700;
+    }
+    return true; // Caso o salário seja superior a 12.000 ou não atenda aos critérios
   }
 
   validationAvailableMargin(employee: Employee, consignedCreditValue: number) {

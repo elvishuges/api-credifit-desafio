@@ -11,13 +11,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 import { AgreedCompanyService } from '../services/agreed-company.service';
 import { Representative } from 'src/representatives/entities/representative.entity';
 import { RepresentativeService } from 'src/representatives/services/representative.service';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
 import { EmployeeService } from 'src/employees/services/employee.service';
+import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto copy';
 
 @ApiTags('agreedCompanies')
 @Controller('agreedCompanies')
@@ -71,6 +71,9 @@ export class AgreedCompaniesController {
     @Param('id') agreedCompanyId: number,
     @Body() createEmployeeDTO: CreateEmployeeDTO,
   ) {
-    this.agreedCompanyService.addEmployee(agreedCompanyId, createEmployeeDTO);
+    return await this.agreedCompanyService.addEmployee(
+      agreedCompanyId,
+      createEmployeeDTO,
+    );
   }
 }

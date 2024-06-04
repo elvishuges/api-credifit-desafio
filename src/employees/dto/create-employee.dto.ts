@@ -15,6 +15,7 @@ export class CreateEmployeeDTO {
   email: string;
 
   @ApiProperty()
+  @IsNotEmpty()
   score: number;
 
   @ApiProperty()

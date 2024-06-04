@@ -8,11 +8,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 
-import { CreateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
-import { User } from 'src/users/entities/user.entity';
 import { Representative } from 'src/representatives/entities/representative.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
+import { UpdateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
 
 @Injectable()
 export class AgreedCompanyService {
@@ -47,15 +46,19 @@ export class AgreedCompanyService {
       representative: representative,
     });
   }
-  async addEmployee(agreedCompanyId: number, employee: CreateEmployeeDTO) {
+  async addEmployee(
+    agreedCompanyId: number,
+    employee: CreateEmployeeDTO,
+  ): Promise<AgreedCompany> {
     const agreedCompany = await this.agreedCompanyRepository.findOne({
       where: { id: agreedCompanyId },
       relations: ['employees'],
     });
-    const cratedEmployee = this.employeeRepository.create(employee);
+    const cratedEmployee = await this.employeeRepository.save(employee);
+    console.log(cratedEmployee);
     cratedEmployee.agreedCompany = agreedCompany;
     agreedCompany.employees.push(cratedEmployee);
-    return this.agreedCompanyRepository.save(agreedCompany);
+    return await this.agreedCompanyRepository.save(agreedCompany);
   }
 
   async findOne(id: number): Promise<AgreedCompany> {
