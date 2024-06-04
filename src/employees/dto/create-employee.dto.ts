@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CreateAgreedCompanyDTO } from 'src/agreed-companies/dto/create-agreed-company.dto';
 
 export class CreateEmployeeDTO {
   @ApiProperty()
@@ -14,6 +13,9 @@ export class CreateEmployeeDTO {
   @ApiProperty()
   @IsNotEmpty()
   email: string;
+
+  @ApiProperty()
+  score: number;
 
   @ApiProperty()
   @IsNotEmpty()

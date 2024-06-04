@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ConsignedCreditService } from '../services/consigned-credit.service';
+import { CreateConsignedCreditDTO } from '../dto/create-consigned-credit.dto copy';
 
 @ApiTags('consignedCredits')
 @Controller('consignedCredits')
@@ -19,5 +20,11 @@ export class ConsignedCreditController {
       employeeId,
       consignedCreditValue,
     );
+  }
+
+  @ApiOperation({ summary: 'Criar emprestimo' })
+  @Post()
+  create(@Body() createConsignedCreditDTO: CreateConsignedCreditDTO) {
+    return this.consignedCreditService.create(createConsignedCreditDTO);
   }
 }

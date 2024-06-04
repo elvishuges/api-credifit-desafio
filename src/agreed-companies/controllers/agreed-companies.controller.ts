@@ -11,7 +11,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
+import { CreateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 import { AgreedCompanyService } from '../services/agreed-company.service';
 import { Representative } from 'src/representatives/entities/representative.entity';

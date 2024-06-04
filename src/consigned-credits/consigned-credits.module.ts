@@ -5,9 +5,12 @@ import { ConsignedCredit } from './entities/consigned-credit.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmployeesModule } from 'src/employees/employees.module';
 import { Employee } from 'src/employees/entities/employee.entity';
+import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ConsignedCredit, Employee])],
+  imports: [
+    TypeOrmModule.forFeature([ConsignedCredit, Employee, AgreedCompany]),
+  ],
   providers: [ConsignedCreditService],
   controllers: [ConsignedCreditController],
 })

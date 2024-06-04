@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateRepresentativeDTO } from '../dto/create-representative.dto';
+import { CreateRepresentativeDTO } from '../dto/update-representative.dto';
 
 import { InjectRepository } from '@nestjs/typeorm';
 

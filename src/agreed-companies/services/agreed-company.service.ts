@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 
-import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
+import { CreateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
 import { User } from 'src/users/entities/user.entity';
 import { Representative } from 'src/representatives/entities/representative.entity';
 import { Employee } from 'src/employees/entities/employee.entity';

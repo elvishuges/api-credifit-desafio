@@ -1,8 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Body,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConsignedCredit } from '../entities/consigned-credit.entity';
 import { Repository } from 'typeorm';
 import { Employee } from 'src/employees/entities/employee.entity';
+import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
+import { CreateConsignedCreditDTO } from '../dto/create-consigned-credit.dto copy';
 
 @Injectable()
 export class ConsignedCreditService {
@@ -12,6 +19,9 @@ export class ConsignedCreditService {
 
     @InjectRepository(Employee)
     private readonly employeeRepository: Repository<Employee>,
+
+    @InjectRepository(AgreedCompany)
+    private readonly agreedCompanyRepository: Repository<AgreedCompany>,
   ) {}
 
   async simulate(
@@ -31,10 +41,28 @@ export class ConsignedCreditService {
       this.createInstallmentsObject(consignedCreditValue);
     return installmentObject;
   }
+  async create(
+    createConsignedCreditDTO: CreateConsignedCreditDTO,
+  ): Promise<ConsignedCredit | any> {
+    const employee = await this.employeeRepository.findOne({
+      where: { id: createConsignedCreditDTO.employeeId },
+      relations: ['agreedCompany'],
+    });
+
+    if (!employee || employee.agreedCompany == null) {
+      throw new NotFoundException('Funcionário não vinculado a uma empresa');
+    }
+
+    return 'installmentObject';
+  }
+
+  mockApproveScore() {
+    return Math.random() < 0.5; // Retorna verdadeiro com 50% de chance e falso com 50% de chance
+  }
 
   validationAvailableMargin(employee: Employee, consignedCreditValue: number) {
     if (consignedCreditValue > employee.salary * 0.35) {
-      throw new NotFoundException(
+      throw new UnauthorizedException(
         'Valor Solicitado não pode exceder 35% do salário',
       );
     }

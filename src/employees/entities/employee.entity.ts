@@ -17,6 +17,9 @@ export class Employee extends UserBase {
   @Column('decimal', { precision: 10, scale: 2 })
   salary: number;
 
+  @Column()
+  score: number;
+
   @ManyToOne(() => AgreedCompany, (agreedCompany) => agreedCompany.employees)
   @JoinColumn({ name: 'agreedCompany_id' })
   agreedCompany: AgreedCompany;
