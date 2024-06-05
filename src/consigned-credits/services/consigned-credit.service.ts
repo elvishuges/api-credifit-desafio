@@ -63,7 +63,7 @@ export class ConsignedCreditService {
     );
     consignedCredit.currentInstallment = 1;
     consignedCredit.dateNextInstallment = new Date(
-      consignedCredit.createdAt.getMonth() + 1,
+      consignedCredit.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000,
     );
     consignedCredit.totalConsignedCredit =
       createConsignedCreditDTO.totalConsignedCredit;
@@ -81,6 +81,12 @@ export class ConsignedCreditService {
 
     return this.consignedCreditRepository.save(consignedCredit);
   }
+
+  addOneMonth = (date: string) => {
+    const result = new Date(date);
+    result.setMonth(result.getMonth() + 1);
+    return result; // Retorna a data no formato ISO string
+  };
 
   isAutomaticallyApproved(salary: number, score: number): boolean {
     if (salary <= 2000) {
