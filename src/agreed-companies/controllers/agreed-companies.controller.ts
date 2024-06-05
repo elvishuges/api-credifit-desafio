@@ -17,7 +17,7 @@ import { Representative } from 'src/representatives/entities/representative.enti
 import { RepresentativeService } from 'src/representatives/services/representative.service';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
 import { EmployeeService } from 'src/employees/services/employee.service';
-import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto copy';
+import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 
 @ApiTags('agreedCompanies')
 @Controller('agreedCompanies')

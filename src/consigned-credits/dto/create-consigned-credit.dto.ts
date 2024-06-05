@@ -17,20 +17,4 @@ export class CreateConsignedCreditDTO {
   @ApiProperty()
   @IsNotEmpty()
   employeeId: number;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  status?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  statusInfos?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  dateNextInstallment?: Date;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  currentInstallment?: number;
 }

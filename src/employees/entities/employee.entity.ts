@@ -21,7 +21,7 @@ export class Employee extends UserBase {
   @Column()
   score: number;
 
-  @ManyToOne(() => AgreedCompany, (agreedCompany) => agreedCompany.employees)
-  @JoinColumn({ name: 'agreedCompany_id' })
+  @ManyToOne(() => AgreedCompany)
+  @JoinColumn({ name: 'agreedCompany_id', referencedColumnName: 'id' })
   agreedCompany: AgreedCompany;
 }

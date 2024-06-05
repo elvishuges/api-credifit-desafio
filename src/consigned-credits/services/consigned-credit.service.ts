@@ -9,7 +9,7 @@ import { ConsignedCredit } from '../entities/consigned-credit.entity';
 import { Repository } from 'typeorm';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
-import { CreateConsignedCreditDTO } from '../dto/create-consigned-credit.dto copy';
+import { CreateConsignedCreditDTO } from '../dto/create-consigned-credit.dto';
 
 @Injectable()
 export class ConsignedCreditService {
@@ -43,25 +43,43 @@ export class ConsignedCreditService {
   }
   async create(
     createConsignedCreditDTO: CreateConsignedCreditDTO,
-  ): Promise<ConsignedCredit | any> {
+  ): Promise<ConsignedCredit> {
     const employee = await this.employeeRepository.findOne({
       where: { id: createConsignedCreditDTO.employeeId },
       relations: ['agreedCompany'],
     });
 
-    if (!employee) {
+    if (!employee || !employee.agreedCompany) {
       throw new NotFoundException('Funcionário não vinculado a uma empresa');
     }
+
+    this.validationAvailableMargin(
+      employee,
+      createConsignedCreditDTO.totalConsignedCredit,
+    );
+
+    const consignedCredit = await this.consignedCreditRepository.save(
+      createConsignedCreditDTO,
+    );
+    consignedCredit.currentInstallment = 1;
+    consignedCredit.dateNextInstallment = new Date(
+      consignedCredit.createdAt.getMonth() + 1,
+    );
+    consignedCredit.totalConsignedCredit =
+      createConsignedCreditDTO.totalConsignedCredit;
+    consignedCredit.totalConsignedCredit =
+      createConsignedCreditDTO.totalConsignedCredit;
+    consignedCredit.employeeId = employee.id;
+
     const validScore = this.isAutomaticallyApproved(
       employee.salary,
       employee.score,
     );
+    consignedCredit.statusInfos = validScore
+      ? 'Aprovado'
+      : 'Reprovado Por Score';
 
-    // if (validScore) {
-    //   throw new NotFoundException('Funcionário não vinculado a uma empresa');
-    // }
-
-    return 'installmentObject';
+    return this.consignedCreditRepository.save(consignedCredit);
   }
 
   isAutomaticallyApproved(salary: number, score: number): boolean {
@@ -74,7 +92,7 @@ export class ConsignedCreditService {
     } else if (salary <= 12000) {
       return score >= 700;
     }
-    return true; // Caso o salário seja superior a 12.000 ou não atenda aos critérios
+    return true;
   }
 
   validationAvailableMargin(employee: Employee, consignedCreditValue: number) {

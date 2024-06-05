@@ -1,38 +1,27 @@
-import {
-  Entity,
-  Column,
-  Index,
-  OneToOne,
-  JoinColumn,
-  OneToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne } from 'typeorm';
 
-import { ApiProperty } from '@nestjs/swagger';
-import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 import { Base } from 'src/core/entities/base';
 import { Employee } from 'src/employees/entities/employee.entity';
 
 @Entity({ name: 'consignedCredits' })
 export class ConsignedCredit extends Base {
-  @Column()
-  status: string;
-
-  @Column()
+  @Column({ default: '' })
   statusInfos: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column({ default: 0 })
+  status: number;
+
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
   totalConsignedCredit: number;
 
-  @Column()
+  @Column({ default: 0 })
   numberInstallments: number;
 
-  @Column()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   dateNextInstallment: Date;
 
-  @Column()
+  @Column({ default: 0 })
   currentInstallment: number;
 
   @ManyToOne(() => AgreedCompany, (company) => company.id)

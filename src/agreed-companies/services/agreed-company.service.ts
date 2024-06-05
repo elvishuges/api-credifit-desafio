@@ -3,15 +3,15 @@ import {
   HttpStatus,
   Injectable,
   NotFoundException,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 
-import { Representative } from 'src/representatives/entities/representative.entity';
 import { Employee } from 'src/employees/entities/employee.entity';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
-import { UpdateAgreedCompanyDTO } from '../dto/update-agreed-company.dto';
+import { CreateRepresentativeDTO } from 'src/representatives/dto/create-representative.dto';
 
 @Injectable()
 export class AgreedCompanyService {
@@ -40,12 +40,13 @@ export class AgreedCompanyService {
     return agreedCompany.employees;
   }
 
-  async create(name: string, representative: Representative) {
+  async create(name: string, representative: CreateRepresentativeDTO) {
     return await this.agreedCompanyRepository.save({
       name: name,
       representative: representative,
     });
   }
+
   async addEmployee(
     agreedCompanyId: number,
     employee: CreateEmployeeDTO,
@@ -54,9 +55,8 @@ export class AgreedCompanyService {
       where: { id: agreedCompanyId },
       relations: ['employees'],
     });
+
     const cratedEmployee = await this.employeeRepository.save(employee);
-    console.log(cratedEmployee);
-    cratedEmployee.agreedCompany = agreedCompany;
     agreedCompany.employees.push(cratedEmployee);
     return await this.agreedCompanyRepository.save(agreedCompany);
   }
