@@ -13,8 +13,6 @@ import {
 } from '@nestjs/common';
 import { AgreedCompany } from '../entities/agreed-company.entity';
 import { AgreedCompanyService } from '../services/agreed-company.service';
-import { Representative } from 'src/representatives/entities/representative.entity';
-import { RepresentativeService } from 'src/representatives/services/representative.service';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
 import { EmployeeService } from 'src/employees/services/employee.service';
 import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
@@ -22,32 +20,13 @@ import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 @ApiTags('agreedCompanies')
 @Controller('agreedCompanies')
 export class AgreedCompaniesController {
-  constructor(
-    private readonly agreedCompanyService: AgreedCompanyService,
-    private readonly representativeService: RepresentativeService,
-  ) {}
+  constructor(private readonly agreedCompanyService: AgreedCompanyService) {}
 
   @ApiOperation({ summary: 'Criar Empresa Conveniada' })
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createAgreedCompanyDTO: CreateAgreedCompanyDTO) {
-    const existingRepresentative = await this.representativeService.findByEmail(
-      createAgreedCompanyDTO.representative.email,
-    );
-    if (existingRepresentative) {
-      throw new HttpException(
-        `Email informado já cadastrado`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    const createdRepresentative = await this.representativeService.create(
-      createAgreedCompanyDTO.representative,
-    );
-    return this.agreedCompanyService.create(
-      createAgreedCompanyDTO.name,
-      createdRepresentative,
-    );
+    return this.agreedCompanyService.create(createAgreedCompanyDTO);
   }
 
   @ApiOperation({ summary: 'Lista todas as empresas' })

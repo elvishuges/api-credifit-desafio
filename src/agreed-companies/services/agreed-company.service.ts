@@ -11,7 +11,7 @@ import { AgreedCompany } from '../entities/agreed-company.entity';
 
 import { Employee } from 'src/employees/entities/employee.entity';
 import { CreateEmployeeDTO } from 'src/employees/dto/create-employee.dto';
-import { CreateRepresentativeDTO } from 'src/representatives/dto/create-representative.dto';
+import { CreateAgreedCompanyDTO } from '../dto/create-agreed-company.dto';
 
 @Injectable()
 export class AgreedCompanyService {
@@ -23,9 +23,7 @@ export class AgreedCompanyService {
   ) {}
 
   async findAll() {
-    return this.agreedCompanyRepository.find({
-      relations: ['representative'],
-    });
+    return this.agreedCompanyRepository.find({});
   }
   async findAllEmployees(agreedCompanyId: number) {
     const agreedCompany = await this.agreedCompanyRepository.findOne({
@@ -40,11 +38,8 @@ export class AgreedCompanyService {
     return agreedCompany.employees;
   }
 
-  async create(name: string, representative: CreateRepresentativeDTO) {
-    return await this.agreedCompanyRepository.save({
-      name: name,
-      representative: representative,
-    });
+  async create(createAgreedCompanyDTO: CreateAgreedCompanyDTO) {
+    return await this.agreedCompanyRepository.save(createAgreedCompanyDTO);
   }
 
   async addEmployee(
@@ -59,6 +54,10 @@ export class AgreedCompanyService {
     const cratedEmployee = await this.employeeRepository.save(employee);
     agreedCompany.employees.push(cratedEmployee);
     return await this.agreedCompanyRepository.save(agreedCompany);
+  }
+  async findByEmail(email: string): Promise<AgreedCompany> {
+    const query = { where: [{ email }] };
+    return await this.agreedCompanyRepository.findOne(query);
   }
 
   async findOne(id: number): Promise<AgreedCompany> {

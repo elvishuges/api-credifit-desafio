@@ -7,7 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthService } from './auth/services/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { RepresentativesModule } from './representatives/representatives.module';
 import { EmployeesModule } from './employees/employees.module';
 import { AgreedCompaniesModule } from './agreed-companies/agreed-companies.module';
 import { ConsignedCreditsModule } from './consigned-credits/consigned-credits.module';
@@ -25,7 +24,6 @@ import { ConsignedCreditsModule } from './consigned-credits/consigned-credits.mo
     EmployeesModule,
     UsersModule,
     AuthModule,
-    RepresentativesModule,
     AgreedCompaniesModule,
     ConsignedCreditsModule,
   ],

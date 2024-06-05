@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from 'src/users/entities/user.entity';
-import { Representative } from 'src/representatives/entities/representative.entity';
 import { Employee } from '../entities/employee.entity';
 import { CreateEmployeeDTO } from '../dto/create-employee.dto';
 

@@ -5,9 +5,7 @@ import {
 } from 'class-validator';
 
 import { Injectable } from '@nestjs/common';
-
-import { EmployeeService } from '../services/employee.service';
-import { AgreedCompanyService } from 'src/agreed-companies/services/agreed-company.service';
+import { AgreedCompanyService } from '../services/agreed-company.service';
 
 /**
  * Custom validation constraint for email uniqueness
@@ -15,15 +13,11 @@ import { AgreedCompanyService } from 'src/agreed-companies/services/agreed-compa
 @ValidatorConstraint({ name: 'isEmailUnique', async: true })
 @Injectable()
 export class IsEmailUnique implements ValidatorConstraintInterface {
-  constructor(
-    private readonly employeeService: EmployeeService,
-    private readonly agreedCompanyService: AgreedCompanyService,
-  ) {}
+  constructor(private readonly agreedCompanyService: AgreedCompanyService) {}
 
   public async validate(email: string): Promise<boolean> {
-    const employee = await this.employeeService.findByEmail(email);
-    const company = await this.agreedCompanyService.findByEmail(email);
-    if (employee || company) {
+    const user = await this.agreedCompanyService.findByEmail(email);
+    if (user) {
       return false;
     }
     return true;

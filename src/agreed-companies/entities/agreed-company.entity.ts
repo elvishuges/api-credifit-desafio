@@ -8,26 +8,16 @@ import {
 } from 'typeorm';
 
 import { Employee } from './../../employees/entities/employee.entity';
-import { Representative } from 'src/representatives/entities/representative.entity';
+import { UserBase } from 'src/core/entities/userBase';
 
 @Entity({ name: 'agreedCompanies' })
-export class AgreedCompany {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class AgreedCompany extends UserBase {
+  @Column()
+  cnpj: string;
 
   @Column()
-  name: string;
+  companyName: string;
 
   @OneToMany(() => Employee, (employee) => employee.agreedCompany)
   employees: Employee[];
-
-  @JoinColumn()
-  @OneToOne(
-    () => Representative,
-    (representative) => representative.agreedCompany,
-    {
-      cascade: true,
-    },
-  )
-  representative: Representative;
 }

@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
 import { EmployeeService } from './services/employee.service';
 import { IsEmailUnique } from './validators/is-email-unique.validator';
-import { RepresentativesModule } from 'src/representatives/representatives.module';
+import { AgreedCompaniesModule } from 'src/agreed-companies/agreed-companies.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Employee]), RepresentativesModule],
+  imports: [
+    TypeOrmModule.forFeature([Employee]),
+    forwardRef(() => AgreedCompaniesModule),
+  ],
   providers: [IsEmailUnique, EmployeeService],
   exports: [EmployeeService],
 })
