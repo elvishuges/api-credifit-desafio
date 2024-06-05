@@ -10,7 +10,7 @@ import { IsEmailUnique } from './validators/is-email-unique.validator';
 @Module({
   imports: [
     TypeOrmModule.forFeature([AgreedCompany, Employee]),
-    forwardRef(() => Employee),
+    forwardRef(() => EmployeesModule),
   ],
   controllers: [AgreedCompaniesController],
   providers: [IsEmailUnique, AgreedCompanyService],
