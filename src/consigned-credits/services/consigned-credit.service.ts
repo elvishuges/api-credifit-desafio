@@ -44,10 +44,11 @@ export class ConsignedCreditService {
   async create(
     createConsignedCreditDTO: CreateConsignedCreditDTO,
   ): Promise<ConsignedCredit> {
-    const employee = await this.employeeRepository.findOne({
+    const employeeQuery = {
       where: { id: createConsignedCreditDTO.employeeId },
       relations: ['agreedCompany'],
-    });
+    };
+    const employee = await this.employeeRepository.findOne(employeeQuery);
 
     if (!employee || !employee.agreedCompany) {
       throw new NotFoundException('Funcionário não vinculado a uma empresa');

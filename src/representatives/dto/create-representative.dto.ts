@@ -6,7 +6,7 @@ import {
   Length,
   Validate,
 } from 'class-validator';
-import { IsEmailUnique } from 'src/users/validators/is-email-unique.validator';
+import { IsEmailUnique } from '../validators/is-email-unique.validator';
 
 export class CreateRepresentativeDTO {
   @ApiProperty()

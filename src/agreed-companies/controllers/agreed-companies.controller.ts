@@ -25,7 +25,6 @@ export class AgreedCompaniesController {
   constructor(
     private readonly agreedCompanyService: AgreedCompanyService,
     private readonly representativeService: RepresentativeService,
-    private readonly employeeService: EmployeeService,
   ) {}
 
   @ApiOperation({ summary: 'Criar Empresa Conveniada' })
@@ -45,12 +44,10 @@ export class AgreedCompaniesController {
     const createdRepresentative = await this.representativeService.create(
       createAgreedCompanyDTO.representative,
     );
-
-    const createdAgreedCompany = this.agreedCompanyService.create(
+    return this.agreedCompanyService.create(
       createAgreedCompanyDTO.name,
       createdRepresentative,
     );
-    return createdAgreedCompany;
   }
 
   @ApiOperation({ summary: 'Lista todas as empresas' })

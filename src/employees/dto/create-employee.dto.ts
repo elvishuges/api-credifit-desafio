@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+  Validate,
+} from 'class-validator';
+import { IsEmailUnique } from '../validators/is-email-unique.validator';
 
 export class CreateEmployeeDTO {
   @ApiProperty()
@@ -11,16 +18,21 @@ export class CreateEmployeeDTO {
   cpf: string;
 
   @ApiProperty()
+  @IsEmail()
   @IsNotEmpty()
-  email: string;
+  @Length(10, 100)
+  @Validate(IsEmailUnique)
+  readonly email: string;
 
   @ApiProperty()
   @IsNotEmpty()
   score: number;
 
   @ApiProperty()
+  @Length(8, 20, { message: 'Senha deve conter no mínimo 8 dígitos!' })
+  @IsString()
   @IsNotEmpty()
-  password: string;
+  readonly password: string;
 
   @ApiProperty()
   @IsNotEmpty()
