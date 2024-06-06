@@ -70,7 +70,7 @@ export class ConsignedCreditService {
       createConsignedCreditDTO.totalConsignedCredit;
     consignedCredit.totalConsignedCredit =
       createConsignedCreditDTO.totalConsignedCredit;
-    consignedCredit.employeeId = employee.id;
+    consignedCredit.employee = employee;
 
     const validScore = this.isAutomaticallyApproved(
       employee.salary,

@@ -12,9 +12,5 @@ export class CreateConsignedCreditDTO {
 
   @ApiProperty()
   @IsNotEmpty()
-  agreedCompanyId: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
   employeeId: number;
 }

@@ -12,6 +12,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserBase } from 'src/core/entities/userBase';
 import { AgreedCompany } from 'src/agreed-companies/entities/agreed-company.entity';
 import { Exclude } from 'class-transformer';
+import { ConsignedCredit } from 'src/consigned-credits/entities/consigned-credit.entity';
 
 @Entity({ name: 'employee' })
 export class Employee extends UserBase {
@@ -24,4 +25,10 @@ export class Employee extends UserBase {
   @ManyToOne(() => AgreedCompany)
   @JoinColumn({ name: 'agreedCompany_id', referencedColumnName: 'id' })
   agreedCompany: AgreedCompany;
+
+  @OneToMany(
+    () => ConsignedCredit,
+    (consignedCredit) => consignedCredit.employee,
+  )
+  consignedCredits: ConsignedCredit[];
 }

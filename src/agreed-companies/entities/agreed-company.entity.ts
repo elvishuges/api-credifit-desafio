@@ -5,6 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import { Employee } from './../../employees/entities/employee.entity';
